@@ -17,7 +17,11 @@ class dataOnlineChecker:
     def __init__(self):
         self.data_download_url = r'https://football-data.co.uk/data.php#download'
         self.main_url = r'https://football-data.co.uk/'
+        self.ava_data_table_stat = pd.DataFrame()
         self.link_map = {}
+
+        # paths
+        self.ava_data_table_stat_path = os.path.join('.', 'data', 'ava_datasets.csv')
 
     def check_ava_leagues(self):
         # Available leagues categories
@@ -90,6 +94,12 @@ class dataOnlineChecker:
 
         # Call cleaning function
         self._clean_code_name_ava_year(code_book_dict)
+
+    def export_ava_data_table_stat(self):
+        if self.ava_data_table_stat.empty:
+            print('[ERROR] Not yet defined the self.ava_data_table_stat...')
+        else:
+            self.ava_data_table_stat.to_csv(self.ava_data_table_stat_path)
 
     def _clean_code_name_ava_year(self, code_book_dict):
         # Extract the earliest year and code name one by one
